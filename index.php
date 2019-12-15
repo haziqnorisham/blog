@@ -1,6 +1,18 @@
 <?php
 	session_start();
 
+	$cookie_name = "visited";	
+
+	if(!isset($_COOKIE[$cookie_name])) {    	
+    	
+    	$cookie_value = "1";
+    	setcookie($cookie_name, $cookie_value);
+    	echo "Welcome New User!";
+
+	} else {
+	    echo "Welcome Back!";
+	}	
+
 	if(isset( $_SESSION['user_id'])){
 		echo "user_id = ".$_SESSION['user_id'];
 	}
@@ -11,7 +23,7 @@
 	}
 
 	include_once("pdo.php");
-	$stmt = $pdo->query("SELECT posts.post_id, posts.title, posts.pub_date, posts.body, users.name, users.user_id FROM posts inner join users on posts.user_id = users.user_id order by posts.pub_date desc");
+	$stmt = $pdo->query("SELECT posts.post_id, posts.title, posts.pub_date, posts.body, users.name, users.user_id FROM posts inner join users on posts.user_id = users.user_id ORDER BY posts.pub_date DESC");
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 ?>
