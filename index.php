@@ -11,7 +11,7 @@
 	}
 
 	include_once("pdo.php");
-	$stmt = $pdo->query("SELECT posts.post_id, posts.title, posts.pub_date, posts.body, users.name, users.user_id FROM posts inner join users on posts.user_id = users.user_id");
+	$stmt = $pdo->query("SELECT posts.post_id, posts.title, posts.pub_date, posts.body, users.name, users.user_id FROM posts inner join users on posts.user_id = users.user_id order by posts.pub_date desc");
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 ?>
