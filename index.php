@@ -1,17 +1,16 @@
 <?php
 	session_start();
+	$cookie_name = "visited";
 
-	$cookie_name = "visited";	
+	if(!isset($_COOKIE[$cookie_name])) {
 
-	if(!isset($_COOKIE[$cookie_name])) {    	
-    	
     	$cookie_value = "1";
     	setcookie($cookie_name, $cookie_value);
     	echo "Welcome New User!";
 
 	} else {
 	    echo "Welcome Back!";
-	}	
+	}
 
 	if(isset( $_SESSION['user_id'])){
 		echo "user_id = ".$_SESSION['user_id'];
@@ -25,13 +24,13 @@
 	include_once("pdo.php");
 	$stmt = $pdo->query("SELECT posts.post_id, posts.title, posts.pub_date, posts.body, users.name, users.user_id FROM posts inner join users on posts.user_id = users.user_id ORDER BY posts.pub_date DESC");
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
+
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<style>
-			table {			  
+			table {
 			  border-style: double;
 			  margin-bottom: 10px;
 			}
@@ -61,7 +60,7 @@
 
 
 		</style>
-	</head>	
+	</head>
 
 	<body>
 		<table>
@@ -70,21 +69,21 @@
 				<?php
 					if(isset( $_SESSION['user_id'])){
 						echo '
-							<td><a href="logout.php">Logout</a></td>							
+							<td><a href="logout.php">Logout</a></td>
 							';
 					}
 					else{
 						echo '<td><a href="login.php">Login</a></td><td><a href="register.php">Register</a></td>';
 					}
-				?>		
-							
+				?>
+
 			</tr>
 		</table>
 
 		<?php
 		if(isset( $_SESSION['user_id'])){
 		echo '
-	
+
 		<table class="new_post">
 			<tr>
 				<td>
@@ -96,7 +95,7 @@
 			      <textarea name="body" form="add_post">Enter text here...</textarea>
 			      <br><br>
 			      <input type="submit" value="Create New Post">
-			    </form> 
+			    </form>
 			    </td>
 		    </tr>
 	    </table>';}?>
@@ -115,7 +114,7 @@
 			</tr>
 			<?php
 				if(isset( $_SESSION['user_id']) && ($_SESSION["user_id"] == $rows[$x]["user_id"])){
-					echo (' 
+					echo ('
 			<tr>
 				<td class="post_buttons">
 					<form action="delete_post.php" method="post">
@@ -127,7 +126,7 @@
 			?>
 
 		</table>
-		
+
 		<?php
 			$x++;
 			}
